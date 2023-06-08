@@ -12,14 +12,14 @@ import networkx as nx
 import os
 
 
-PATH = ''
-FILE = ''
-US_COL = ''
-NEWS_COL = ''
-FILE_NEWS = ''
-FILE_US = ''
-MEDIA_COL = ''
-FILE_MEDIA = ''
+PATH = '/home/tcicchini/MediaEchoChambers'
+FILE = 'NYData_main_bipartite.csv'
+US_COL = 'usr_id'
+NEWS_COL = 'url_expanded'
+FILE_NEWS = 'news_network_p1.gml'
+FILE_US = 'users_network_p1.gml'
+MEDIA_COL = 'medio'
+FILE_MEDIA = 'media_network_p1.gml'
 
 d = pd.read_csv(os.path.join(PATH, FILE))
 # id_us = pd.DataFrame([{'i_us' : i,
@@ -111,7 +111,7 @@ edgelist_col = sorted((d.groupby([US_COL,
 id_medio = id_medio.set_index('i_not').to_dict()[MEDIA_COL]
 id_us = id_us.set_index('i_us').to_dict()[US_COL]
 # # Proyección de noticias
-alpha = 0.05
+alpha = 0.1
 B = bicm.BipartiteGraph()
 B.set_edgelist(edgelist_row)
 B.get_bicm_matrix()
@@ -128,7 +128,7 @@ nx.write_gml(g,
               os.path.join(PATH, FILE_MEDIA)
               )
 # Proyección de usuarios
-alpha = 0.05
+alpha = 0.1
 B = bicm.BipartiteGraph()
 B.set_edgelist(edgelist_col)
 B.get_bicm_matrix()
